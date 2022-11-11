@@ -8,7 +8,7 @@ import type { PotentialDecoder } from '@hex/types';
 
 import type { DecoderItem } from '../decoders';
 import { output } from '../output';
-import { state } from '../state';
+import { DocumentView } from '../state';
 
 const customDecoderWatchers = new Set<fs.FSWatcher>();
 
@@ -28,8 +28,8 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 		return [];
 	}
 
-	const root = state.activeView
-		? workspace.getWorkspaceFolder(state.activeView.document.uri)
+	const root = DocumentView.active
+		? workspace.getWorkspaceFolder(DocumentView.active.document.uri)
 		: workspace.workspaceFolders?.[0];
 
 	if (!root) {

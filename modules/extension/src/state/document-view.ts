@@ -1,4 +1,5 @@
 import type { Event, Webview } from 'vscode';
+import { commands } from 'vscode';
 
 import type { ClientMessage, ClientMessageMap, HostMessage } from '@hex/types';
 
@@ -10,7 +11,21 @@ interface TypedWebview<R, P> extends Webview {
 	readonly postMessage: (message: P) => Promise<boolean>;
 }
 
-export class ViewState {
+export class DocumentView {
+	static #active: DocumentView | null = null;
+
+	static get active(): DocumentView | null {
+		return this.#active;
+	}
+
+	static set active(value: DocumentView | null) {
+		this.#active = value;
+		commands.executeCommand('setContext', 'inspectorHex:openEditor', Boolean(value));
+	}
+
+	static readonly all = new Set<DocumentView>();
+	static readonly visible = new Set<DocumentView>();
+
 	private offset = 0;
 	private buffer = new Uint8Array();
 

@@ -3,9 +3,9 @@ import { window, Uri } from 'vscode';
 
 import { BinaryDocument } from './binary-document';
 import { defaultDecoder } from './decoders';
-import { state, SelectedDecoderStatusItem, ViewState } from './state';
+import { DocumentView, SelectedDecoderStatusItem } from './state';
 
-const viewStates = new WeakMap<Webview, ViewState>();
+const viewStates = new WeakMap<Webview, DocumentView>();
 
 export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDocument> {
 	private static readonly viewType = 'inspectorHex.binary';
@@ -79,30 +79,30 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 			const currentView = viewStates.get(webviewPanel.webview)!;
 
 			if (webviewPanel.visible) {
-				state.visibleViews.add(currentView);
+				DocumentView.visible.add(currentView);
 			} else {
-				state.visibleViews.delete(currentView);
+				DocumentView.visible.delete(currentView);
 			}
 
 			if (webviewPanel.active) {
-				state.activeView = currentView;
-				SelectedDecoderStatusItem.show(state.activeView.decoderItem.label);
-			} else if (state.activeView === currentView) {
-				state.activeView = null;
+				DocumentView.active = currentView;
+				SelectedDecoderStatusItem.show(DocumentView.active.decoderItem.label);
+			} else if (DocumentView.active === currentView) {
+				DocumentView.active = null;
 				SelectedDecoderStatusItem.hide();
 			}
 		});
 
-		const viewState = new ViewState(webviewPanel.webview, document, defaultDecoder);
+		const viewState = new DocumentView(webviewPanel.webview, document, defaultDecoder);
 
-		state.allViews.add(viewState);
-		state.activeView = viewState;
+		DocumentView.all.add(viewState);
+		DocumentView.active = viewState;
 		SelectedDecoderStatusItem.show(viewState.decoderItem.label);
 
 		viewStates.set(webviewPanel.webview, viewState);
 
 		if (webviewPanel.visible) {
-			state.visibleViews.add(viewState);
+			DocumentView.visible.add(viewState);
 		}
 	}
 }

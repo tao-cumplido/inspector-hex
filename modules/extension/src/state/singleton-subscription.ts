@@ -1,7 +1,7 @@
 import { Disposable } from 'vscode';
 
-export class SingletonDisposable extends Disposable {
-	protected static get<C extends { prototype: SingletonDisposable }>(this: C): C['prototype'] {
+export class SingletonSubscription extends Disposable {
+	protected static get<C extends { prototype: SingletonSubscription }>(this: C): C['prototype'] {
 		// @ts-expect-error;
 		if (!this.instance) {
 			throw new Error('instance not yet created');
@@ -12,9 +12,11 @@ export class SingletonDisposable extends Disposable {
 		return this.instance;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	constructor(onDipose = () => {}) {
-		super(onDipose);
+	protected subscriptions: Disposable[] = [];
+
+	constructor() {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		super(() => {});
 
 		// @ts-expect-error
 		if (this.constructor.instance) {
@@ -23,5 +25,12 @@ export class SingletonDisposable extends Disposable {
 
 		// @ts-expect-error;
 		this.constructor.instance = this;
+	}
+
+	override dispose() {
+		super.dispose();
+		for (const subscription of this.subscriptions) {
+			subscription.dispose();
+		}
 	}
 }

@@ -7,7 +7,7 @@ import type { DecoderResult, DecoderState, PotentialDecoder } from '@hex/types';
 import { isDecoderResult } from '@hex/types';
 
 import { output } from '../output';
-import { state, SelectedDecoderStatusItem } from '../state';
+import { DocumentView, SelectedDecoderStatusItem } from '../state';
 
 export abstract class AbstractDocument<T extends FileHandle | undefined> implements CustomDocument {
 	readonly uri;
@@ -56,16 +56,16 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 	}
 
 	dispose() {
-		if (state.activeView?.document === this) {
-			state.visibleViews.delete(state.activeView);
+		if (DocumentView.active?.document === this) {
+			DocumentView.visible.delete(DocumentView.active);
 			SelectedDecoderStatusItem.hide();
-			state.activeView = null;
+			DocumentView.active = null;
 		}
 
-		const thisView = [...state.allViews].find(({ document }) => document === this);
+		const thisView = [...DocumentView.all].find(({ document }) => document === this);
 
 		if (thisView) {
-			state.allViews.delete(thisView);
+			DocumentView.all.delete(thisView);
 		}
 	}
 }

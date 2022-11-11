@@ -1,6 +1,4 @@
-import { ExtensionState } from './extension-state';
-
+export * from './decoders-state';
+export * from './document-view';
+export * from './go-to-offset';
 export * from './selected-decoder-status-item';
-export * from './view-state';
-
-export const state = new ExtensionState();
