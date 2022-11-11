@@ -15,10 +15,10 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/tao-cumplido/vscode-hex-viewer"
+		"url": "https://github.com/tao-cumplido/inspector-hex"
 	},
 	"bugs": {
-		"url": "https://github.com/tao-cumplido/vscode-hex-viewer/issues"
+		"url": "https://github.com/tao-cumplido/inspector-hex/issues"
 	},
 	"license": "MIT",
 	"icon": "logo.png",
