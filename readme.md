@@ -9,7 +9,7 @@ Custom editor extension to open files in raw byte representation. Also renders p
 - Supports multibyte encodings
 - Custom decoder scripts (not supported in virtual environments)
 
-https://user-images.githubusercontent.com/6384563/201337554-237301e4-f674-4707-9858-79c1e1e3c219.mp4
+![](https://raw.githubusercontent.com/tao-cumplido/inspector-hex/main/sample.gif)
 
 ## Built-in decoders
 
