@@ -1,0 +1,187 @@
+body {
+	--z-layer-scrollbar: 100;
+	--z-layer-header: 3;
+	--z-layer-header-bg: 2;
+	--z-layer-content: 1;
+	--z-layer-section-progress: 0;
+	--scrollbar-size-vertical: 0px;
+	--scrollbar-size-horizontal: 0px;
+	--content-translate: 0px;
+	--row-height: 2em;
+	width: 100vw;
+	height: 100vh;
+	font-family: var(--vscode-editor-font-family);
+	user-select: none;
+	overflow: hidden;
+	padding: 0;
+}
+
+.viewport {
+	width: fit-content;
+	place-self: start;
+	display: grid;
+	grid: repeat(2, var(--row-height)) / [offset] auto 0.3rem repeat(16, [byte] auto) 1rem repeat(16, [text] auto) [end];
+	place-content: start;
+	padding: 0 20px;
+}
+
+.scrollbar {
+	position: fixed;
+	background: var(--vscode-editor-background);
+	z-index: var(--z-layer-scrollbar);
+}
+
+.scrollbar .handle {
+	background: var(--vscode-scrollbarSlider-background);
+	position: absolute;
+}
+
+.scrollbar .handle:hover {
+	background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+.scrollbar .handle.active {
+	background: var(--vscode-scrollbarSlider-activeBackground);
+}
+
+.scrollbar.vertical {
+	width: var(--scrollbar-size-vertical);
+	bottom: var(--scrollbar-size-horizontal);
+	top: 0;
+	right: 0;
+}
+
+.scrollbar.horizontal {
+	height: var(--scrollbar-size-horizontal);
+	right: var(--scrollbar-size-vertical);
+	bottom: 0;
+	left: 0;
+}
+
+.scrollbar.vertical .handle {
+	width: var(--scrollbar-size-vertical);
+}
+
+.scrollbar.horizontal .handle {
+	height: var(--scrollbar-size-horizontal);
+}
+
+.scrollbar.corner {
+	width: var(--scrollbar-size-vertical);
+	height: var(--scrollbar-size-horizontal);
+	bottom: 0;
+	right: 0;
+}
+
+.container,
+.placeholders,
+header,
+section {
+	display: contents;
+}
+
+header.column > * {
+	grid-row: 1 / span 1;
+}
+
+header.column > .background {
+	grid-column: 1 / end;
+	background: var(--vscode-editor-background);
+	z-index: var(--z-layer-header-bg);
+}
+
+.progress {
+	display: grid;
+	place-items: center;
+	visibility: hidden;
+	contain: content;
+}
+
+header.column > .progress {
+	--design-unit: 3;
+	grid-column: offset / span 1;
+	z-index: var(--z-layer-header);
+}
+
+header.column > .spacer {
+	grid-column: offset / span 1;
+	visibility: hidden;
+}
+
+header.column > .cell {
+	z-index: var(--z-layer-header);
+}
+
+header.row > * {
+	grid-column: offset / span 1;
+}
+
+header.row > *,
+section > *,
+.placeholders > * {
+	grid-row: 2 / span 1;
+	transform: translateY(calc(var(--row-index) * var(--row-height) + var(--content-translate)));
+}
+
+.progress.section {
+	--design-unit: 2;
+	grid-row: 2;
+	height: calc(100vh - var(--row-height) - var(--scrollbar-size-horizontal));
+	z-index: var(--z-layer-section-progress);
+}
+
+.progress.section > vscode-progress-ring {
+	transform: scale(5);
+}
+
+.progress.section.bytes {
+	grid-column: 1 byte / span 16;
+}
+
+.progress.section.text {
+	grid-column: 1 text / span 16;
+}
+
+.cell {
+	display: flex;
+	align-items: center;
+	padding: 0.3em 0.3rem;
+	background: var(--vscode-editor-background);
+	z-index: var(--z-layer-content);
+	contain: content;
+}
+
+.placeholders .cell {
+	z-index: var(--z-layer-section-progress);
+}
+
+.placeholders .skeleton {
+	width: 100%;
+	height: 50%;
+	background: var(--vscode-inspectorHex-placeholder);
+	border-radius: var(--row-height);
+}
+
+.placeholders.hidden .skeleton {
+	display: none;
+}
+
+.offset {
+	color: var(--vscode-editorLineNumber-foreground);
+}
+
+.empty {
+	color: var(--vscode-editorGhostText-foreground);
+}
+
+.shadow {
+	background: var(--vscode-editor-hoverHighlightBackground);
+}
+
+.highlight {
+	background: var(--vscode-editor-wordHighlightStrongBackground);
+}
+
+.selected {
+	background: var(--vscode-editor-selectionBackground);
+}

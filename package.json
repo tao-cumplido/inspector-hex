@@ -1,0 +1,167 @@
+{
+	"name": "inspector-hex",
+	"displayName": "Inspector Hex",
+	"description": "View files in byte representation with multiple decoding options.",
+	"version": "0.3.0",
+	"preview": true,
+	"workspaces": [
+		"modules/*"
+	],
+	"engines": {
+		"vscode": "^1.73.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tao-cumplido/vscode-hex-viewer"
+	},
+	"bugs": {
+		"url": "https://github.com/tao-cumplido/vscode-hex-viewer/issues"
+	},
+	"license": "MIT",
+	"icon": "logo.png",
+	"activationEvents": [
+		"onCustomEditor:inspectorHex.binary"
+	],
+	"main": "./dist/extension.js",
+	"browser": "./dist/extension.web.js",
+	"publisher": "tao-cumplido",
+	"capabilities": {
+		"virtualWorkspaces": {
+			"supported": "limited",
+			"description": "Custom decoders are not supported in virtual workspaces."
+		}
+	},
+	"contributes": {
+		"colors": [
+			{
+				"id": "inspectorHex.placeholder",
+				"description": "Color for placeholder rows while loading data.",
+				"defaults": {
+					"dark": "#ffffff10",
+					"light": "#00000010"
+				}
+			}
+		],
+		"configuration": {
+			"title": "Inspector Hex",
+			"properties": {
+				"inspectorHex.pageRows": {
+					"type": "intger",
+					"min": 0,
+					"default": 512,
+					"description": "Number of rows to load and decode per virtual page."
+				},
+				"inspectorHex.customDecoders": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					},
+					"default": {},
+					"description": "Map of custom decoders. Keys are decoder names and values are the path to the JS file. Relative paths are resolved from the workspace root."
+				},
+				"inspectorHex.decode.renderControlCharacters": {
+					"oneOf": [
+						{
+							"type": "string",
+							"enum": [
+								"off",
+								"hex",
+								"abbreviation",
+								"escape",
+								"caret",
+								"picture"
+							]
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"hex",
+									"abbreviation",
+									"escape",
+									"caret",
+									"picture"
+								]
+							},
+							"minItems": 1,
+							"uniqueItems": true
+						}
+					],
+					"default": "off",
+					"description": "Render control characters with a graphical representation."
+				}
+			}
+		},
+		"customEditors": [
+			{
+				"viewType": "inspectorHex.binary",
+				"displayName": "Inspector Hex",
+				"selector": [
+					{
+						"filenamePattern": "*"
+					}
+				],
+				"priority": "option"
+			}
+		],
+		"commands": [
+			{
+				"command": "inspectorHex.selectDecoder",
+				"title": "Inspector Hex: Select decoder"
+			},
+			{
+				"command": "inspectorHex.reloadDecoders",
+				"title": "Inspector Hex: Reload decoders"
+			},
+			{
+				"command": "inspectorHex.goToOffset",
+				"title": "Inspector Hex: Go to offset..."
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "inspectorHex.selectDecoder",
+					"when": "inspectorHex:openEditor"
+				},
+				{
+					"command": "inspectorHex.reloadDecoders"
+				},
+				{
+					"command": "inspectorHex.goToOffset",
+					"when": "inspectorHex:openEditor"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run build",
+		"build": "npm run build --workspaces",
+		"watch:extension:node": "npm run -w @hex/types build && npm run -w @hex/extension watch:node",
+		"watch:extension:browser": "npm run -w @hex/types build && npm run -w @hex/extension watch:browser",
+		"watch:editor": "npm run -w @hex/editor watch",
+		"lint": "eslint ."
+	},
+	"dependencies": {
+		"@nishin/reader": "0.2.1",
+		"@vscode/webview-ui-toolkit": "1.1.0"
+	},
+	"devDependencies": {
+		"@types/vscode": "1.73.0",
+		"@types/node": "16.18.3",
+		"@typescript-eslint/eslint-plugin": "5.42.1",
+		"@typescript-eslint/parser": "5.42.1",
+		"esbuild": "0.15.13",
+		"eslint": "8.27.0",
+		"eslint-plugin-style": "0.2.0",
+		"json-schema-to-ts": "2.6.0",
+		"prettier": "2.7.1",
+		"typescript": "4.8.4",
+		"vite": "3.2.3",
+		"vsce": "2.14.0"
+	}
+}

@@ -1,0 +1,106 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Watch Node",
+			"type": "npm",
+			"script": "watch:extension:node",
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": "^[X▲►→●♦✘▶⬥] \\[([A-Z]+)\\] (.+)$",
+						"severity": 1,
+						"message": 2
+					},
+					{
+						"regexp": "^    (.+?):(\\d+):(\\d+):$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "build started",
+					"endsPattern": "build finished"
+				}
+			},
+			"isBackground": true,
+			"presentation": {
+				"group": "watch"
+			}
+		},
+		{
+			"label": "Watch Browser",
+			"type": "npm",
+			"script": "watch:extension:browser",
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": "^[X▲►→●♦✘▶⬥] \\[([A-Z]+)\\] (.+)$",
+						"severity": 1,
+						"message": 2
+					},
+					{
+						"regexp": "^    (.+?):(\\d+):(\\d+):$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "build started",
+					"endsPattern": "build finished"
+				}
+			},
+			"isBackground": true,
+			"presentation": {
+				"group": "watch"
+			}
+		},
+		{
+			"label": "Watch Editor",
+			"type": "npm",
+			"script": "watch:editor",
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": ": (.+?): (.*)$",
+						"severity": 1,
+						"message": 2
+					},
+					{
+						"regexp": "^file: (.+?):(\\d+):(\\d+)$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					}
+				],
+				"background": {
+					"beginsPattern": "^build started",
+					"endsPattern": "^built in"
+				}
+			},
+			"isBackground": true,
+			"presentation": {
+				"group": "watch"
+			}
+		},
+		{
+			"label": "Run Node",
+			"dependsOn": ["Watch Node", "Watch Editor"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Run Browser",
+			"dependsOn": ["Watch Browser", "Watch Editor"],
+			"group": "build"
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"name": "@hex/types",
+	"private": true,
+	"main": "dist/index.js",
+	"types": "index.d.ts",
+	"scripts": {
+		"build": "ts-node build.ts"
+	},
+	"devDependencies": {
+		"ajv": "8.11.0",
+		"ts-node": "10.9.1"
+	}
+}
