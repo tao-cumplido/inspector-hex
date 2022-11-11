@@ -7,7 +7,7 @@ import type { DecoderResult, DecoderState, PotentialDecoder } from '@hex/types';
 import { isDecoderResult } from '@hex/types';
 
 import { output } from '../output';
-import { state } from '../state';
+import { state, SelectedDecoderStatusItem } from '../state';
 
 export abstract class AbstractDocument<T extends FileHandle | undefined> implements CustomDocument {
 	readonly uri;
@@ -39,14 +39,12 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 			});
 
 			if (!isDecoderResult(result)) {
-				// eslint-disable-next-line @typescript-eslint/no-floating-promises
 				window.showErrorMessage(`Invalid decoder result.`);
 				return null;
 			}
 
 			return result;
 		} catch (error) {
-			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			window.showErrorMessage(`Error while decoding data. See output for details.`);
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			output.appendLine(`${error}\n`);
@@ -60,7 +58,7 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 	dispose() {
 		if (state.activeView?.document === this) {
 			state.visibleViews.delete(state.activeView);
-			state.activeDecoderStatusItem.hide();
+			SelectedDecoderStatusItem.hide();
 			state.activeView = null;
 		}
 

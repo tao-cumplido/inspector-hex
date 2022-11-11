@@ -1,10 +1,10 @@
 import type { ExtensionContext } from 'vscode';
-import { commands, window, workspace, InputBoxValidationSeverity, QuickPickItemKind, StatusBarAlignment } from 'vscode';
+import { commands, window, workspace, InputBoxValidationSeverity, QuickPickItemKind } from 'vscode';
 
 import { BinaryViewProvider } from './binary-view-provider';
 import { resolveCustomDecoders } from './custom-decoders';
 import { builtinDecoders, defaultDecoder } from './decoders';
-import { state } from './state';
+import { state, SelectedDecoderStatusItem } from './state';
 
 declare module 'vscode' {
 	// eslint-disable-next-line @typescript-eslint/no-namespace, @typescript-eslint/no-shadow
@@ -22,7 +22,6 @@ function reloadDecoders() {
 	state.allViews.forEach((view) => {
 		const item = state.decoderItems.find(({ label }) => label === view.decoderItem.label);
 		view.decoderItem = item ?? defaultDecoder;
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		view.prepareText();
 	});
 }
@@ -30,12 +29,7 @@ function reloadDecoders() {
 export function activate(context: ExtensionContext): void {
 	state.decoderItems = [...builtinDecoders, ...resolveCustomDecoders(reloadDecoders)];
 
-	state.activeDecoderStatusItem = window.createStatusBarItem(StatusBarAlignment.Right, 0);
-
-	state.activeDecoderStatusItem.command = 'inspectorHex.selectDecoder';
-	state.activeDecoderStatusItem.tooltip = 'Select decoder';
-
-	context.subscriptions.push(state.activeDecoderStatusItem);
+	context.subscriptions.push(new SelectedDecoderStatusItem());
 
 	context.subscriptions.push(
 		workspace.onDidChangeConfiguration((event) => {
@@ -60,7 +54,7 @@ export function activate(context: ExtensionContext): void {
 			const item = await window.showQuickPick(items);
 
 			if (item && state.activeView) {
-				state.activeDecoderStatusItem.text = item.label;
+				SelectedDecoderStatusItem.show(item.label);
 				state.activeView.decoderItem = item;
 				await state.activeView.prepareText();
 			}

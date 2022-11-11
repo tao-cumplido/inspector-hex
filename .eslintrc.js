@@ -299,7 +299,6 @@ module.exports = {
 				'@typescript-eslint/await-thenable': 'error',
 				'@typescript-eslint/no-base-to-string': 'error',
 				'@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
-				'@typescript-eslint/no-floating-promises': 'error',
 				'@typescript-eslint/no-for-in-array': 'error',
 				'@typescript-eslint/no-meaningless-void-operator': 'error',
 				'@typescript-eslint/no-misused-promises': 'error',

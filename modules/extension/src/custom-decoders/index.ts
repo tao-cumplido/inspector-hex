@@ -18,7 +18,6 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 		.get<Record<string, string>>('customDecoders');
 
 	if (!customDecodersConfiguration) {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		window.showErrorMessage(`Couldn't read custom decoders configuration.`);
 		return [];
 	}
@@ -34,13 +33,11 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 		: workspace.workspaceFolders?.[0];
 
 	if (!root) {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		window.showErrorMessage(`Couldn't resolve workspace root for custom decoders.`);
 		return [];
 	}
 
 	if (root.uri.scheme !== 'file') {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		window.showWarningMessage(`Custom decoders are not supported in virtual workspaces.`);
 		return [];
 	}
@@ -82,7 +79,6 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 				decoder: decoder as PotentialDecoder,
 			});
 		} catch (error) {
-			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			window.showErrorMessage(`Error resolving custom decoder '${label}'. See output for details.`);
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			output.appendLine(`${error}\n`);

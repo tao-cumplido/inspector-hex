@@ -1,4 +1,3 @@
-import type { StatusBarItem } from 'vscode';
 import { commands } from 'vscode';
 
 import type { DecoderItem } from '../decoders';
@@ -7,7 +6,6 @@ import { builtinDecoders } from '../decoders';
 
 export class ExtensionState {
 	#activeView: ViewState | null = null;
-	#activeDecoderStatusItem?: StatusBarItem;
 
 	decoderItems: DecoderItem[] = builtinDecoders;
 
@@ -20,18 +18,6 @@ export class ExtensionState {
 
 	set activeView(value: ViewState | null) {
 		this.#activeView = value;
-		commands.executeCommand('setContext', 'inspectorHex:openEditor', Boolean(value)).then(undefined, console.error);
-	}
-
-	get activeDecoderStatusItem(): StatusBarItem {
-		if (!this.#activeDecoderStatusItem) {
-			throw new Error(`activeDecoderStatusItem hasn't been assigned yet`);
-		}
-
-		return this.#activeDecoderStatusItem;
-	}
-
-	set activeDecoderStatusItem(value: StatusBarItem) {
-		this.#activeDecoderStatusItem = value;
+		commands.executeCommand('setContext', 'inspectorHex:openEditor', Boolean(value));
 	}
 }

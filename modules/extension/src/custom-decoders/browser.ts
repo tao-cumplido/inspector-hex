@@ -8,7 +8,6 @@ export function resolveCustomDecoders(): DecoderItem[] {
 		.get<Record<string, string>>('customDecoders');
 
 	if (!customDecodersConfiguration) {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		window.showErrorMessage(`Couldn't read custom decoders configuration.`);
 		return [];
 	}
@@ -19,7 +18,6 @@ export function resolveCustomDecoders(): DecoderItem[] {
 		return [];
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-floating-promises
 	window.showWarningMessage(`Custom decoders are not supported in virtual workspaces.`);
 	return [];
 }

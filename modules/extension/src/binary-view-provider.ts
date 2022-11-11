@@ -3,7 +3,7 @@ import { window, Uri } from 'vscode';
 
 import { BinaryDocument } from './binary-document';
 import { defaultDecoder } from './decoders';
-import { state, ViewState } from './state';
+import { state, SelectedDecoderStatusItem, ViewState } from './state';
 
 const viewStates = new WeakMap<Webview, ViewState>();
 
@@ -86,11 +86,10 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 
 			if (webviewPanel.active) {
 				state.activeView = currentView;
-				state.activeDecoderStatusItem.text = state.activeView.decoderItem.label;
-				state.activeDecoderStatusItem.show();
+				SelectedDecoderStatusItem.show(state.activeView.decoderItem.label);
 			} else if (state.activeView === currentView) {
 				state.activeView = null;
-				state.activeDecoderStatusItem.hide();
+				SelectedDecoderStatusItem.hide();
 			}
 		});
 
@@ -98,8 +97,7 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 
 		state.allViews.add(viewState);
 		state.activeView = viewState;
-		state.activeDecoderStatusItem.text = viewState.decoderItem.label;
-		state.activeDecoderStatusItem.show();
+		SelectedDecoderStatusItem.show(viewState.decoderItem.label);
 
 		viewStates.set(webviewPanel.webview, viewState);
 
