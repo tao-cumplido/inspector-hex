@@ -2,6 +2,10 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
+## Unpublished
+### Fixed
+- Close file handle when editor is closed
+
 ## [0.3.1] -- 2022-11-11
 ### Added
 - Changelog

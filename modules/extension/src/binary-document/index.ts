@@ -22,4 +22,9 @@ export class BinaryDocument extends AbstractDocument<FileHandle> {
 		await this.fileHandle.read(buffer, 0, byteLength, offset);
 		return buffer;
 	}
+
+	override dispose() {
+		super.dispose();
+		this.fileHandle.close();
+	}
 }
