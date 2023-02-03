@@ -5,6 +5,7 @@ All notable changes to the "inspector-hex" extension will be documented in this 
 ## Unpublished
 ### Changed
 - Update `@nishin/reader` to 0.4.1
+- Use `subarray` instead of `slice` in virtual workspaces for minor performance improvement
 ### Fixed
 - Close file handle when editor is closed
 

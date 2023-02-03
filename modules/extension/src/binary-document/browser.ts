@@ -38,6 +38,6 @@ export class BinaryDocument extends AbstractDocument<undefined> {
 	}
 
 	read(offset: number, byteLength: number): Uint8Array {
-		return this.data.slice(offset, offset + byteLength);
+		return this.data.subarray(offset, offset + byteLength);
 	}
 }
