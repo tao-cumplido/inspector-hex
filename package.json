@@ -147,7 +147,7 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@nishin/reader": "0.2.1",
+		"@nishin/reader": "0.4.1",
 		"@vscode/webview-ui-toolkit": "1.1.0"
 	},
 	"devDependencies": {

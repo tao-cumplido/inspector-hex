@@ -3,6 +3,8 @@
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
 ## Unpublished
+### Changed
+- Update `@nishin/reader` to 0.4.1
 ### Fixed
 - Close file handle when editor is closed
 
