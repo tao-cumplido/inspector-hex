@@ -2,6 +2,10 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
+## Unpublished
+### Added
+- Experimental TypeScript support for custom decoders
+
 ## [0.3.2] -- 2023-02-03
 ### Changed
 - Update `@nishin/reader` to 0.4.1

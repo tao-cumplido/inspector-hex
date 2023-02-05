@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import '@esbuild-kit/cjs-loader';
 import clearModule from 'clear-module';
 import { window, workspace } from 'vscode';
 
@@ -66,17 +67,22 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 			process.chdir(path.isAbsolute(file) ? path.dirname(destinationPath) : root.uri.fsPath);
 
 			// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-			const decoder: unknown = require(destinationPath);
+			const module = require(destinationPath) as Record<string, unknown>;
+			/* prettier-ignore */
+			const potentialDecoder =
+				'default' in module ? module.default :
+				'decoder' in module ? module.decoder :
+				module;
 
 			process.chdir(cwd);
 
-			if (typeof decoder !== 'function') {
+			if (typeof potentialDecoder !== 'function') {
 				throw new TypeError(`Custom decoder '${label}' is not a function`);
 			}
 
 			result.push({
 				label,
-				decoder: decoder as PotentialDecoder,
+				decoder: potentialDecoder as PotentialDecoder,
 			});
 		} catch (error) {
 			window.showErrorMessage(`Error resolving custom decoder '${label}'. See output for details.`);

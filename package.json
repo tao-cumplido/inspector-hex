@@ -144,6 +144,7 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
+		"@esbuild-kit/cjs-loader": "2.4.1",
 		"@nishin/reader": "0.4.1",
 		"@vscode/webview-ui-toolkit": "1.1.0"
 	},

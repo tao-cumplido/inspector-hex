@@ -2,7 +2,7 @@
 	"name": "@hex/extension",
 	"private": true,
 	"scripts": {
-		"esbuild:node": "esbuild ./src/extension.ts --bundle --outfile=../../dist/extension.js --external:vscode --format=cjs --platform=node",
+		"esbuild:node": "esbuild ./src/extension.ts --bundle --outfile=../../dist/extension.js --external:vscode --format=cjs --platform=node --external:esbuild",
 		"esbuild:browser": "esbuild ./src/extension.ts --bundle --outfile=../../dist/extension.web.js --external:vscode --format=cjs --platform=browser",
 		"build": "tsc -noEmit && npm run esbuild:node -- --minify && npm run esbuild:browser -- --minify",
 		"watch:node": "npm run esbuild:node -- --sourcemap --watch",

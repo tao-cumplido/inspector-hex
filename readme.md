@@ -64,13 +64,15 @@ interface DecoderResult {
 type Decoder = (data: Buffer, state: DecoderState) => DecoderResult | Promise<DecoderResult>;
 ```
 
+Type definitions can also be imported from the [`@inspector-hex/decoder-api`](https://www.npmjs.com/package/@inspector-hex/decoder-api) package. The package version should always match the extension's version.
+
 Custom decoders for single-byte encodings should be pretty straight forward. Below is a sample decoder, that simply renders the numeric value of each byte in its decimal form:
 
 ```js
 module.exports = (data, { offset }) => {
 	return {
 		offset,
-		values: [...data].map((byte) => `${byte}`),
+		values: Array.from(data, (byte) => `${byte}`),
 	};
 }
 ```
@@ -84,6 +86,25 @@ In any case, the start and end of the buffer should be well outside the currentl
 To use a custom decoder it has to be registered in the settings. The configuration entry point is `inspectorHex.customDecoders` and is an object lists key/value pairs, where the key is the name for the decoder and the value is the path to the script file. Relative paths are resolved from the workspace root.
 
 > :warning: Custom decoder scripts are *not* sandboxed as VS Code extensions aren't either. So don't run custom decoders from untrusted sources.
+
+The script file is watched and whenever it updates custom decoders are automatically reloaded. This does not apply to dependencies (via `require` or `import`) though, as this functionality would also require parsing the script file and generating a dependency tree to watch. This means to see changes in a dependency reflected, either save the actual decoder script file or run the `Reload decoders` command.
+
+A custom decoder can alternatively be written in TypeScript. Note that this feature is currently experimental. TypeScript source files are transformed on demand by the [`@esbuild-kit/cjs-loader](https://www.npmjs.com/package/@esbuild-kit/cjs-loader) package. As the name suggests, the loader itself is using `esbuild` under the hood, which has a few restrictions regarding TypeScript. See the section [*TypeScript caveats* in the `esbuild` documentation](https://esbuild.github.io/content-types/#typescript-caveats) for specifics.
+
+In TypeScript the above example could be written like this:
+
+```ts
+import type { Decoder } from '@inspector-hex/decoder-api';
+
+export const decoder: Decoder = (data, { offset }) => {
+	return {
+		offset,
+		values: Array.from(data, (byte) => `${byte}`),
+	};
+}
+```
+
+Valid exports are an identifier named `decoder` or the default export. Note though, that default exports make it a little more annoying to type the export with the `Decoder` type. From TypeScript 4.9 the `satisfies` operator could be used to achieve this without an additional identifier.
 
 ## Configuration
 
