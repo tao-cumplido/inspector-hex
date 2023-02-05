@@ -128,7 +128,7 @@ module.exports = {
 			{ class: 'node' },
 			{ class: 'external' },
 			'./style.css',
-			'@hex/',
+			['@hex/', '@inspector-hex/'],
 			{ class: 'relative' },
 		],
 		'style/sort-imports': ['error', { caseGroups: true, typesInGroup: 'top' }],

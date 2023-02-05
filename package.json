@@ -22,9 +22,6 @@
 	},
 	"license": "MIT",
 	"icon": "logo.png",
-	"activationEvents": [
-		"onCustomEditor:inspectorHex.binary"
-	],
 	"main": "./dist/extension.js",
 	"browser": "./dist/extension.web.js",
 	"publisher": "tao-cumplido",
@@ -140,9 +137,9 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run build",
-		"build": "npm run build --workspaces",
-		"watch:extension:node": "npm run -w @hex/types build && npm run -w @hex/extension watch:node",
-		"watch:extension:browser": "npm run -w @hex/types build && npm run -w @hex/extension watch:browser",
+		"build": "npm run build --workspaces --if-present",
+		"watch:extension:node": "npm run -w @inspector-hex/decoder-api build && npm run -w @hex/extension watch:node",
+		"watch:extension:browser": "npm run -w @inspector-hex/decoder-api build && npm run -w @hex/extension watch:browser",
 		"watch:editor": "npm run -w @hex/editor watch",
 		"lint": "eslint ."
 	},

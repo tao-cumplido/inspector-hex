@@ -1,0 +1,13 @@
+{
+	"name": "@inspector-hex/decoder-api",
+	"version": "0.3.4",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "ts-node build.ts && tsc --project tsconfig.dts.json"
+	},
+	"devDependencies": {
+		"ajv": "8.11.0",
+		"ts-node": "10.9.1"
+	}
+}

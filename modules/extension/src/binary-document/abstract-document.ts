@@ -3,8 +3,9 @@ import type { FileHandle } from 'fs/promises';
 import type { CustomDocument, Uri } from 'vscode';
 import { window, workspace } from 'vscode';
 
-import type { DecoderResult, DecoderState, PotentialDecoder } from '@hex/types';
-import { isDecoderResult } from '@hex/types';
+import type { PotentialDecoder } from '@hex/types';
+import type { DecoderResult, DecoderState } from '@inspector-hex/decoder-api';
+import { isDecoderResult } from '@inspector-hex/decoder-api';
 
 import { output } from '../output';
 import { DocumentView, SelectedDecoderStatusItem } from '../state';

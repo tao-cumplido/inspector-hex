@@ -1,7 +1,7 @@
 import type { ByteOrder, Encoding } from '@nishin/reader';
 import { BinaryReader, DataType, ReadError, ReadMode } from '@nishin/reader';
 
-import type { Decoder } from '@hex/types';
+import type { Decoder } from '@inspector-hex/decoder-api';
 
 import { resolveControlCharacter } from './control-characters';
 import { errorItem } from './error';

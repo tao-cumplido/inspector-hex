@@ -1,4 +1,4 @@
-import type { DecoderResult } from '@hex/types';
+import type { DecoderResult } from '@inspector-hex/decoder-api';
 
 import type { DataRow, HeaderItem } from './state';
 import { assert } from './assert';

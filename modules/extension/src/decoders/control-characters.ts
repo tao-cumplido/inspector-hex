@@ -1,4 +1,4 @@
-import type { RenderControlCharacters } from '@hex/types';
+import type { RenderControlCharacters } from '@inspector-hex/decoder-api';
 
 export function resolveControlCharacter(
 	codePoint: number,
