@@ -2,6 +2,10 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
+## [0.3.6] -- 2023-02-06
+### Fixed
+- Failed to run extension due to missing `esbuild` dependency
+
 ## [0.3.5] -- 2023-02-06
 ### Added
 - Experimental TypeScript support for custom decoders

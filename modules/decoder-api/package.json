@@ -1,6 +1,6 @@
 {
 	"name": "@inspector-hex/decoder-api",
-	"version": "0.3.5",
+	"version": "0.3.6",
 	"main": "dist/index.js",
 	"types": "index.d.ts",
 	"scripts": {
