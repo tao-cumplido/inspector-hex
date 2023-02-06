@@ -4,6 +4,9 @@ modules/**
 dist/tsconfig.tsbuildinfo
 dist/**/*.html
 node_modules/**
+!node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js
+!node_modules/@esbuild/
+!node_modules/esbuild/
 vsc-extension-quickstart.md
 **/tsconfig*.json
 **/.*
