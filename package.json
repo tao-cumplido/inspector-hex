@@ -145,16 +145,16 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@esbuild-kit/cjs-loader": "2.4.1",
-		"@nishin/reader": "0.4.1",
-		"@vscode/webview-ui-toolkit": "1.1.0"
+		"@vscode/webview-ui-toolkit": "1.1.0",
+		"esbuild": "0.17.5"
 	},
 	"devDependencies": {
+		"@esbuild-kit/cjs-loader": "2.4.1",
+		"@nishin/reader": "0.4.1",
 		"@types/vscode": "1.73.0",
 		"@types/node": "16.18.3",
 		"@typescript-eslint/eslint-plugin": "5.42.1",
 		"@typescript-eslint/parser": "5.42.1",
-		"esbuild": "0.15.13",
 		"eslint": "8.27.0",
 		"eslint-plugin-style": "0.2.0",
 		"prettier": "2.7.1",
