@@ -1,9 +1,0 @@
-{
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"emitDeclarationOnly": true,
-		"outDir": "dist"
-	},
-	"include": ["*.ts"],
-	"exclude": ["build.ts"]
-}

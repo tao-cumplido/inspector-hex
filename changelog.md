@@ -2,7 +2,7 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
-## Unpublished
+## [0.3.5] -- 2023-02-06
 ### Added
 - Experimental TypeScript support for custom decoders
 
