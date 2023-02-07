@@ -1,4 +1,5 @@
 import type { ExtensionContext } from 'vscode';
+import { window } from 'vscode';
 
 import { BinaryViewProvider } from './binary-view-provider';
 import { DecodersState, GoToOffset, SelectedDecoderStatusItem } from './state';
@@ -19,4 +20,5 @@ export function activate(context: ExtensionContext): void {
 	context.subscriptions.push(new SelectedDecoderStatusItem());
 	context.subscriptions.push(new GoToOffset());
 	context.subscriptions.push(BinaryViewProvider.register(context));
+	window.showInformationMessage(`${process.pid}`);
 }
