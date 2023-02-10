@@ -1,3 +1,5 @@
+import inspector from 'node:inspector';
+
 import type { ExtensionContext } from 'vscode';
 import { window } from 'vscode';
 
@@ -21,4 +23,5 @@ export function activate(context: ExtensionContext): void {
 	context.subscriptions.push(new GoToOffset());
 	context.subscriptions.push(BinaryViewProvider.register(context));
 	window.showInformationMessage(`${process.pid}`);
+	window.showInformationMessage(inspector.url() ?? `null`);
 }
