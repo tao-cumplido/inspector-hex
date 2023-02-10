@@ -122,6 +122,28 @@ Map of custom decoders. Keys are decoder names and values are the path to the JS
 }
 ```
 
+### `inspectorHex.defaultDecoders`
+
+Map of default decoders. Keys are glob patterns and values are decoder names. Relative paths are resolved from the workspace root. Decoder names can be either one defined in `inspectorHex.customDecoders` or one of the built-ins:
+
+- `ASCII`
+- `ISO 8859-1`
+- `UTF-8`
+- `UTF-16 BE`
+- `UTF-16 LE`
+- `UTF-32 BE`
+- `UTF-32 LE`
+
+```json
+{
+	"type": "object",
+	"additionalProperties": {
+		"type": "string"
+	},
+	"default": {},
+}
+```
+
 ### `inspectorHex.decode.renderControlCharacters`
 
 Render control characters with a graphical representation. Supports multiple options for choosing a representation. If specified as an array of options, they are evaluated from left to right in descending priority (not all options cover all the control characters). Possible representations can be seen on [Wikipedia](https://en.wikipedia.org/wiki/C0_and_C1_control_codes#Basic_ASCII_control_codes). The `hex` option is the only one that also covers C1 control codes.
@@ -177,7 +199,6 @@ These are just ideas that may or may not happen:
 
 - shifted decoding for multibyte decoders
 - more builtin decoders for standard text encodings like Windows 1252
-- make default decoder configurable for file patterns
 - data inspection
 - display unicode information for decoded text
 - find byte sequences / decoded text

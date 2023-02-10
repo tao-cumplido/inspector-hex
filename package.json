@@ -60,6 +60,14 @@
 					"default": {},
 					"description": "Map of custom decoders. Keys are decoder names and values are the path to the JS file. Relative paths are resolved from the workspace root."
 				},
+				"inspectorHex.defaultDecoders": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					},
+					"default": {},
+					"description": "Default decoders for given glob patterns. Keys are patterns, values are names of decoders, either one of the built-ins or custom defined."
+				},
 				"inspectorHex.decode.renderControlCharacters": {
 					"oneOf": [
 						{
@@ -145,12 +153,13 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@vscode/webview-ui-toolkit": "1.1.0",
-		"esbuild": "0.17.5"
-	},
-	"devDependencies": {
 		"@esbuild-kit/cjs-loader": "2.4.1",
 		"@nishin/reader": "0.4.1",
+		"@vscode/webview-ui-toolkit": "1.1.0",
+		"esbuild": "0.17.5",
+		"minimatch": "6.1.6"
+	},
+	"devDependencies": {
 		"@types/vscode": "1.73.0",
 		"@types/node": "16.18.3",
 		"@typescript-eslint/eslint-plugin": "5.42.1",

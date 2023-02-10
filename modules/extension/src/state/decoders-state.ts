@@ -1,5 +1,6 @@
 import { commands, window, workspace, QuickPickItemKind } from 'vscode';
 
+import type { DecoderItem } from '../decoders';
 import { resolveCustomDecoders } from '../custom-decoders';
 import { builtinDecoders, defaultDecoder } from '../decoders';
 import { DocumentView } from './document-view';
@@ -7,6 +8,10 @@ import { SelectedDecoderStatusItem } from './selected-decoder-status-item';
 import { SingletonSubscription } from './singleton-subscription';
 
 export class DecodersState extends SingletonSubscription {
+	static get items(): readonly DecoderItem[] {
+		return this.get().items;
+	}
+
 	readonly items = [...builtinDecoders, ...resolveCustomDecoders(() => this.reload())];
 
 	constructor() {

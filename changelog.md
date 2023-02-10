@@ -2,6 +2,10 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
+## Unreleased
+### Added
+- Configuration for assigning default decoders to glob paths
+
 ## [0.3.6] -- 2023-02-06
 ### Fixed
 - Failed to run extension due to missing `esbuild` dependency

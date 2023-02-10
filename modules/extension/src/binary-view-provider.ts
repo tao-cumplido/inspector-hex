@@ -1,9 +1,10 @@
 import type { CustomReadonlyEditorProvider, Disposable, ExtensionContext, Webview, WebviewPanel } from 'vscode';
-import { window, Uri } from 'vscode';
+import { minimatch } from 'minimatch';
+import { window, workspace, Uri } from 'vscode';
 
 import { BinaryDocument } from './binary-document';
 import { defaultDecoder } from './decoders';
-import { DocumentView, SelectedDecoderStatusItem } from './state';
+import { DecodersState, DocumentView, SelectedDecoderStatusItem } from './state';
 
 const viewStates = new WeakMap<Webview, DocumentView>();
 
@@ -93,7 +94,19 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 			}
 		});
 
-		const viewState = new DocumentView(webviewPanel.webview, document, defaultDecoder);
+		const defaultDecodersConfiguration =
+			workspace.getConfiguration('inspectorHex').get<Record<string, string>>('defaultDecoders') ?? {};
+
+		const relativePath = workspace.asRelativePath(document.uri, false);
+
+		const defaultEntry = Object.entries(defaultDecodersConfiguration).find(([pattern]) => {
+			const path = pattern.startsWith('/') ? document.uri.fsPath : relativePath;
+			return minimatch(path, pattern);
+		});
+
+		const decoder = DecodersState.items.find(({ label }) => label === defaultEntry?.[1]) ?? defaultDecoder;
+
+		const viewState = new DocumentView(webviewPanel.webview, document, decoder);
 
 		DocumentView.all.add(viewState);
 		DocumentView.active = viewState;
