@@ -2,7 +2,7 @@
 
 All notable changes to the "inspector-hex" extension will be documented in this file.
 
-## Unreleased
+## [0.3.7] -- 2023-02-11
 ### Added
 - Configuration for assigning default decoders to glob paths
 
