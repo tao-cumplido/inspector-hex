@@ -89,7 +89,7 @@ To use a custom decoder it has to be registered in the settings. The configurati
 
 The script file is watched and whenever it updates custom decoders are automatically reloaded. This does not apply to dependencies (via `require` or `import`) though, as this functionality would also require parsing the script file and generating a dependency tree to watch. This means to see changes in a dependency reflected, either save the actual decoder script file or run the `Reload decoders` command.
 
-A custom decoder can alternatively be written in TypeScript. Note that this feature is currently experimental. TypeScript source files are transformed on demand by the [`@esbuild-kit/cjs-loader](https://www.npmjs.com/package/@esbuild-kit/cjs-loader) package. As the name suggests, the loader itself is using `esbuild` under the hood, which has a few restrictions regarding TypeScript. See the section [*TypeScript caveats* in the `esbuild` documentation](https://esbuild.github.io/content-types/#typescript-caveats) for specifics.
+A custom decoder can alternatively be written in TypeScript. Note that this feature is currently experimental. TypeScript source files are transformed on demand by the [`@esbuild-kit/cjs-loader`](https://www.npmjs.com/package/@esbuild-kit/cjs-loader) package. As the name suggests, the loader itself is using `esbuild` under the hood, which has a few restrictions regarding TypeScript. See the section [*TypeScript caveats* in the `esbuild` documentation](https://esbuild.github.io/content-types/#typescript-caveats) for specifics.
 
 In TypeScript the above example could be written like this:
 
