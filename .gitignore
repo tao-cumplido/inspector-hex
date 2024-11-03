@@ -1,5 +1,6 @@
 node_modules
 dist
+eslint-typegen.d.ts
 *.vsix
 *.tgz
 .token

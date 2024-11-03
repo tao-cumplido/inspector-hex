@@ -4,15 +4,22 @@
 	"scripts": {
 		"esbuild:node": "esbuild ./src/extension.ts --bundle --outfile=../../dist/extension.js --external:vscode --format=cjs --platform=node --external:esbuild",
 		"esbuild:browser": "esbuild ./src/extension.ts --bundle --outfile=../../dist/extension.web.js --external:vscode --format=cjs --platform=browser",
-		"build": "tsc -noEmit && npm run esbuild:node -- --minify && npm run esbuild:browser -- --minify",
-		"watch:node": "npm run esbuild:node -- --sourcemap --watch",
-		"watch:browser": "npm run esbuild:browser -- --sourcemap --watch"
+		"build": "tsc -noEmit && pnpm run esbuild:node --minify && pnpm run esbuild:browser --minify",
+		"watch:node": "pnpm run esbuild:node --sourcemap --watch",
+		"watch:browser": "pnpm run esbuild:browser --sourcemap --watch"
 	},
 	"browser": {
 		"src/custom-decoders/index.ts": "./src/custom-decoders/browser.ts",
 		"src/binary-document/index.ts": "./src/binary-document/browser.ts"
 	},
 	"dependencies": {
-		"clear-module": "4.1.2"
+		"@inspector-hex/api": "workspace:*",
+		"clear-module": "4.1.2",
+		"@nishin/reader": "0.6.0",
+		"tsx": "4.19.2",
+		"minimatch": "10.0.1"
+	},
+	"devDependencies": {
+		"@hex/types": "workspace:*"
 	}
 }

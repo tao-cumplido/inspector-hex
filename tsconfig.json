@@ -3,7 +3,7 @@
 	"references": [
 		{ "path": "modules/extension/tsconfig.json" },
 		{ "path": "modules/editor/tsconfig.json" },
-		{ "path": "modules/decoder-api/tsconfig.json" },
+		{ "path": "modules/api/tsconfig.json" },
 		{ "path": "modules/types/tsconfig.json" }
 	]
 }

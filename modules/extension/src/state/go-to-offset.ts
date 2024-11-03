@@ -1,25 +1,24 @@
-import { commands, window, InputBoxValidationSeverity } from 'vscode';
+import { commands, InputBoxValidationSeverity, window } from "vscode";
 
-import { DocumentView } from './document-view';
-import { SingletonSubscription } from './singleton-subscription';
+import { DocumentView } from "./document-view";
+import { SingletonSubscription } from "./singleton-subscription";
 
 export class GoToOffset extends SingletonSubscription {
 	constructor() {
 		super();
 
 		this.subscriptions.push(
-			commands.registerCommand('inspectorHex.goToOffset', async () => {
+			commands.registerCommand("inspectorHex.goToOffset", async () => {
 				const input = await window.showInputBox({
-					title: 'Go to offset',
-					prompt: 'Enter an offset in hexadecimal notation.',
-					// eslint-disable-next-line @typescript-eslint/no-shadow
-					validateInput: (input) => {
-						const value = parseInt(input, 16);
+					title: "Go to offset",
+					prompt: "Enter an offset in hexadecimal notation.",
+					validateInput: (data) => {
+						const value = parseInt(data, 16);
 
-						if (Number.isNaN(value) || !/^[0-9a-f]+$/iu.test(input)) {
+						if (Number.isNaN(value) || !/^[0-9a-f]+$/iu.test(data)) {
 							return {
 								severity: InputBoxValidationSeverity.Error,
-								message: 'Invalid input',
+								message: "Invalid input",
 							};
 						}
 
@@ -28,7 +27,7 @@ export class GoToOffset extends SingletonSubscription {
 						if (value >= size) {
 							return {
 								severity: InputBoxValidationSeverity.Warning,
-								message: 'Input exceeds file size',
+								message: "Input exceeds file size",
 							};
 						}
 

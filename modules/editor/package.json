@@ -4,5 +4,10 @@
 	"scripts": {
 		"build": "vite build",
 		"watch": "vite build --watch --sourcemap --minify false --mode development"
+	},
+	"devDependencies": {
+		"@inspector-hex/api": "workspace:*",
+		"@hex/types": "workspace:*",
+		"@types/vscode-webview": "1.57.5"
 	}
 }

@@ -1,3 +1,3 @@
-import { window } from 'vscode';
+import { window } from "vscode";
 
-export const output = window.createOutputChannel('Inspector Hex');
+export const output = window.createOutputChannel("Inspector Hex");

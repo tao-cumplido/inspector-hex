@@ -1,6 +1,6 @@
 export interface CreateElementData {
 	classList?: string[];
-	style?: Record<string, string>;
+	style?: Record<string, string | undefined>;
 	content?: string | Node | Node[];
 }
 
@@ -20,12 +20,11 @@ export function createElement<T extends keyof HTMLElementTagNameMap>(
 
 	if (data?.style) {
 		for (const property in data.style) {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			element.style.setProperty(property, data.style[property]!);
 		}
 	}
 
-	if (typeof data?.content === 'string') {
+	if (typeof data?.content === "string") {
 		element.textContent = data.content;
 	} else if (data?.content instanceof Array) {
 		const fragment = document.createDocumentFragment();

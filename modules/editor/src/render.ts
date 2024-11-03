@@ -1,5 +1,5 @@
-import { createElement } from './create-element';
-import { hex } from './hex';
+import { createElement } from "./create-element";
+import { hex } from "./hex";
 import {
 	contentHeight,
 	data,
@@ -9,8 +9,8 @@ import {
 	scrollFactorY,
 	stat,
 	viewportHeight,
-} from './state';
-import { vscode } from './vscode';
+} from "./state";
+import { vscode } from "./vscode";
 
 let debounceTimer = 0;
 let lastFirstRendered: number | null = null;
@@ -40,42 +40,42 @@ export function render(): void {
 		const placeholderFragment = document.createDocumentFragment();
 
 		for (let rowIndex = renderStartIndex; rowIndex < renderEndIndex; rowIndex++) {
-			const cell = createElement('div', {
-				classList: ['cell', 'offset'],
+			const cell = createElement("div", {
+				classList: [ "cell", "offset", ],
 				style: {
-					'--row-index': `${rowIndex}`,
+					"--row-index": `${rowIndex}`,
 				},
 				content: hex(rowIndex * 0x10, stat.offsetHexDigitCount),
 			});
 
-			data.rows.set(rowIndex, { offset: cell, bytes: new Array<HTMLElement>(16), text: [] });
+			data.rows.set(rowIndex, { offset: cell, bytes: new Array<HTMLElement>(16), text: [], });
 
 			headerFragment.appendChild(cell);
 
 			const lineSpan = stat.fileRows - 1 === rowIndex ? stat.fileSize % 0x10 : 0x10;
 
 			placeholderFragment.appendChild(
-				createElement('div', {
-					classList: ['cell'],
+				createElement("div", {
+					classList: [ "cell", ],
 					style: {
-						'--row-index': `${rowIndex}`,
-						'grid-column': `byte 1 / span ${lineSpan}`,
+						"--row-index": `${rowIndex}`,
+						"grid-column": `byte 1 / span ${lineSpan}`,
 					},
-					content: createElement('div', {
-						classList: ['skeleton'],
+					content: createElement("div", {
+						classList: [ "skeleton", ],
 					}),
 				}),
 			);
 
 			placeholderFragment.appendChild(
-				createElement('div', {
-					classList: ['cell'],
+				createElement("div", {
+					classList: [ "cell", ],
 					style: {
-						'--row-index': `${rowIndex}`,
-						'grid-column': `text 1 / span ${lineSpan}`,
+						"--row-index": `${rowIndex}`,
+						"grid-column": `text 1 / span ${lineSpan}`,
 					},
-					content: createElement('div', {
-						classList: ['skeleton'],
+					content: createElement("div", {
+						classList: [ "skeleton", ],
 					}),
 				}),
 			);
@@ -83,8 +83,8 @@ export function render(): void {
 
 		data.header.appendChild(headerFragment);
 		data.header.appendChild(
-			createElement('div', {
-				classList: ['placeholders'],
+			createElement("div", {
+				classList: [ "placeholders", ],
 				content: placeholderFragment,
 			}),
 		);
@@ -92,8 +92,8 @@ export function render(): void {
 		clearTimeout(debounceTimer);
 
 		debounceTimer = setTimeout(() => {
-			headerProgress.style.visibility = 'visible';
-			vscode.postMessage({ type: 'fetchBytes', data: { offset: renderStartOffset, byteLength: renderByteLength } });
+			headerProgress.style.visibility = "visible";
+			vscode.postMessage({ type: "fetchBytes", data: { offset: renderStartOffset, byteLength: renderByteLength, }, });
 		}, 250);
 	}
 }

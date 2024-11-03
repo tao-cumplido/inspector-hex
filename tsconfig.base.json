@@ -4,13 +4,11 @@
 		"noUncheckedIndexedAccess": true,
 		"useUnknownInCatchVariables": true,
 		"noImplicitOverride": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"module": "commonjs",
-		"target": "es2020",
-		"lib": ["es2020"],
-		"sourceMap": true,
-		"composite": true
+		"module": "nodenext",
+		"isolatedModules": true,
+		"exactOptionalPropertyTypes": true,
+		"lib": ["esnext"],
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", ".vscode-test"]
 }

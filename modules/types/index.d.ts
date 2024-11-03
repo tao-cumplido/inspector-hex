@@ -1,10 +1,10 @@
-import type { Decoder, DecoderResult } from '@inspector-hex/decoder-api';
+import type { Decoder, DecoderResult } from "@inspector-hex/api";
 
 export type PotentialDecoder = (...args: Parameters<Decoder>) => unknown;
 
 export type DataMessage<T extends string, D = undefined> = D extends undefined
-	? { type: T }
-	: { type: T; data: D extends object ? Readonly<D> : D };
+	? { type: T; }
+	: { type: T; data: D extends object ? Readonly<D> : D; };
 
 type Messages<T> = { [P in keyof T]: P extends string ? DataMessage<P, T[P]> : never }[keyof T];
 

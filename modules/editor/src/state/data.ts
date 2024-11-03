@@ -1,5 +1,5 @@
-import { createElement } from '../create-element';
-import { viewport } from './dom';
+import { createElement } from "../create-element";
+import { viewport } from "./dom";
 
 export interface DataRow {
 	readonly offset?: HTMLElement;
@@ -35,33 +35,31 @@ export interface Data {
 	rows: Map<number, DataRow>;
 }
 
-// eslint-disable-next-line @typescript-eslint/init-declarations
 export let data!: Data;
 
 export function resetData(): Data {
-	const header = createElement('header', {
-		classList: ['row'],
+	const header = createElement("header", {
+		classList: [ "row", ],
 	});
 
-	const bytesSection = createElement('section', {
-		classList: ['bytes'],
+	const bytesSection = createElement("section", {
+		classList: [ "bytes", ],
 	});
 
-	const textSection = createElement('section', {
-		classList: ['text'],
+	const textSection = createElement("section", {
+		classList: [ "text", ],
 	});
 
-	for (const element of viewport.querySelectorAll('.container')) {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	for (const element of viewport.querySelectorAll(".container")) {
 		if (element !== data?.container) {
 			element.remove();
 		}
 	}
 
 	data = {
-		container: createElement('div', {
-			classList: ['container'],
-			content: [header, bytesSection, textSection],
+		container: createElement("div", {
+			classList: [ "container", ],
+			content: [ header, bytesSection, textSection, ],
 		}),
 		header,
 		bytesSection,

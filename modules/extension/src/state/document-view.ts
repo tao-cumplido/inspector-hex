@@ -1,10 +1,8 @@
-import type { Event, Webview } from 'vscode';
-import { commands } from 'vscode';
+import type { ClientMessage, ClientMessageMap, HostMessage } from "@hex/types";
+import { commands, type Event, type Webview } from "vscode";
 
-import type { ClientMessage, ClientMessageMap, HostMessage } from '@hex/types';
-
-import type { BinaryDocument } from '../binary-document';
-import type { DecoderItem } from '../decoders';
+import type { BinaryDocument } from "../binary-document";
+import type { DecoderItem } from "../decoders";
 
 interface TypedWebview<R, P> extends Webview {
 	readonly onDidReceiveMessage: Event<R>;
@@ -20,7 +18,7 @@ export class DocumentView {
 
 	static set active(value: DocumentView | null) {
 		this.#active = value;
-		commands.executeCommand('setContext', 'inspectorHex:openEditor', Boolean(value));
+		commands.executeCommand("setContext", "inspectorHex:openEditor", Boolean(value));
 	}
 
 	static readonly all = new Set<DocumentView>();
@@ -42,11 +40,11 @@ export class DocumentView {
 
 		webview.onDidReceiveMessage(async (message: ClientMessage) => {
 			switch (message.type) {
-				case 'ready':
+				case "ready":
 					return this.handleReady();
-				case 'fetchBytes':
+				case "fetchBytes":
 					return this.handleFetchBytes(message.data);
-				case 'fetchText':
+				case "fetchText":
 					return this.handleFetchText();
 			}
 		});
@@ -54,26 +52,26 @@ export class DocumentView {
 
 	async handleReady(): Promise<unknown> {
 		return this.webview.postMessage({
-			type: 'stat',
+			type: "stat",
 			data: {
 				fileSize: this.document.byteLength,
 			},
 		});
 	}
 
-	async handleFetchBytes({ offset, byteLength }: ClientMessageMap['fetchBytes']): Promise<void> {
+	async handleFetchBytes({ offset, byteLength, }: ClientMessageMap["fetchBytes"]): Promise<void> {
 		this.offset = offset;
 		this.buffer = await this.document.read(offset, byteLength);
 
 		await this.webview.postMessage({
-			type: 'bytes',
-			data: { offset, buffer: this.buffer.buffer.slice(this.buffer.byteOffset, this.buffer.byteLength) },
+			type: "bytes",
+			data: { offset, buffer: this.buffer.buffer.slice(this.buffer.byteOffset, this.buffer.byteLength), },
 		});
 	}
 
 	async prepareText(): Promise<void> {
 		await this.webview.postMessage({
-			type: 'prepareText',
+			type: "prepareText",
 		});
 
 		await this.handleFetchText();
@@ -81,14 +79,14 @@ export class DocumentView {
 
 	async handleFetchText(): Promise<void> {
 		await this.webview.postMessage({
-			type: 'text',
+			type: "text",
 			data: await this.document.decodeWith(this.decoderItem.decoder, this.offset, this.buffer),
 		});
 	}
 
 	async goToOffset(offset: number): Promise<void> {
 		await this.webview.postMessage({
-			type: 'goTo',
+			type: "goTo",
 			data: offset,
 		});
 	}

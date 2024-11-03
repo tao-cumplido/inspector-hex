@@ -1,6 +1,6 @@
-import { assert } from '../assert';
-import { rowHeight, viewport } from './dom';
-import { stat } from './stat';
+import { assert } from "../assert";
+import { rowHeight, viewport } from "./dom";
+import { stat } from "./stat";
 
 declare global {
 	interface WheelEvent {
@@ -12,11 +12,11 @@ declare global {
 
 const handleMinimum = 16.5;
 
-export const scrollBarY = assert.return(document.querySelector<HTMLElement>('.scrollbar.vertical'));
-export const scrollHandleY = assert.return(scrollBarY.querySelector<HTMLElement>('.handle'));
+export const scrollBarY = assert.return(document.querySelector<HTMLElement>(".scrollbar.vertical"));
+export const scrollHandleY = assert.return(scrollBarY.querySelector<HTMLElement>(".handle"));
 
-const scrollBarX = assert.return(document.querySelector<HTMLElement>('.scrollbar.horizontal'));
-const scrollHandleX = assert.return(scrollBarX.querySelector<HTMLElement>('.handle'));
+const scrollBarX = assert.return(document.querySelector<HTMLElement>(".scrollbar.horizontal"));
+const scrollHandleX = assert.return(scrollBarX.querySelector<HTMLElement>(".handle"));
 
 export let viewportHeight = 0;
 export let contentHeight = 0;
@@ -47,9 +47,9 @@ function scrollY(top: number): void {
 	const topMax = viewportHeight - yHandleHeight;
 	scrollTop = Math.max(0, Math.min(top, viewportHeight - yHandleHeight));
 	scrollFactorY = (scrollTop + (scrollTop / topMax) * (yHandleHeight - yHandleReal)) / viewportHeight;
-	document.body.style.setProperty('--content-translate', `-${contentHeight * scrollFactorY}px`);
+	document.body.style.setProperty("--content-translate", `-${contentHeight * scrollFactorY}px`);
 	scrollHandleY.style.top = `${scrollTop}px`;
-	window.dispatchEvent(new CustomEvent('content-scroll'));
+	window.dispatchEvent(new CustomEvent("content-scroll"));
 }
 
 export function goToOffset(offset: number): void {
@@ -65,9 +65,9 @@ export function updateScrollHandle(entries?: readonly ResizeObserverEntry[]): vo
 	contentHeight = (stat.fileRows + 1) * rowHeight;
 
 	if (contentHeight < viewportHeight) {
-		document.body.style.removeProperty('--scrollbar-size-vertical');
+		document.body.style.removeProperty("--scrollbar-size-vertical");
 	} else {
-		document.body.style.setProperty('--scrollbar-size-vertical', '10px');
+		document.body.style.setProperty("--scrollbar-size-vertical", "10px");
 		yHandleReal = viewportHeight ** 2 / contentHeight;
 		yHandleHeight = Math.max(handleMinimum, yHandleReal);
 		scrollHandleY.style.height = `${yHandleHeight}px`;
@@ -82,9 +82,9 @@ new ResizeObserver((entries) => {
 	contentWidth = viewport.getBoundingClientRect().width;
 
 	if (contentWidth < viewportWidth) {
-		document.body.style.removeProperty('--scrollbar-size-horizontal');
+		document.body.style.removeProperty("--scrollbar-size-horizontal");
 	} else {
-		document.body.style.setProperty('--scrollbar-size-horizontal', '10px');
+		document.body.style.setProperty("--scrollbar-size-horizontal", "10px");
 		xHandleReal = viewportWidth ** 2 / contentWidth;
 		xHandleWidth = Math.max(handleMinimum, xHandleReal);
 		scrollHandleX.style.width = `${xHandleWidth}px`;
@@ -92,34 +92,34 @@ new ResizeObserver((entries) => {
 	}
 }).observe(scrollBarX);
 
-scrollHandleY.addEventListener('mousedown', (event) => {
-	scrollHandleY.classList.add('active');
+scrollHandleY.addEventListener("mousedown", (event) => {
+	scrollHandleY.classList.add("active");
 	scrollAnchorY = event.clientY - scrollHandleY.getBoundingClientRect().top;
 });
 
-scrollHandleX.addEventListener('mousedown', (event) => {
-	scrollHandleX.classList.add('active');
+scrollHandleX.addEventListener("mousedown", (event) => {
+	scrollHandleX.classList.add("active");
 	viewportWidth = scrollBarX.getBoundingClientRect().width;
 	scrollAnchorX = event.clientX - scrollHandleX.getBoundingClientRect().left;
 });
 
-window.addEventListener('mouseup', () => {
-	scrollHandleY.classList.remove('active');
-	scrollHandleX.classList.remove('active');
+window.addEventListener("mouseup", () => {
+	scrollHandleY.classList.remove("active");
+	scrollHandleX.classList.remove("active");
 });
 
-window.addEventListener('mousemove', (event) => {
-	if (scrollHandleY.classList.contains('active')) {
+window.addEventListener("mousemove", (event) => {
+	if (scrollHandleY.classList.contains("active")) {
 		scrollY(event.clientY - scrollAnchorY);
 	}
 
-	if (scrollHandleX.classList.contains('active')) {
+	if (scrollHandleX.classList.contains("active")) {
 		scrollX(event.clientX - scrollAnchorX);
 	}
 });
 
-window.addEventListener('wheel', (event) => {
-	const { wheelDelta, wheelDeltaX, wheelDeltaY, deltaY, deltaX, deltaMode, shiftKey } = event;
+window.addEventListener("wheel", (event) => {
+	const { wheelDelta, wheelDeltaX, wheelDeltaY, deltaY, deltaX, deltaMode, shiftKey, } = event;
 
 	// https://stackoverflow.com/questions/10744645/detect-touchpad-vs-mouse-in-javascript/62415754#62415754
 	const isTouchpad = (() => {
