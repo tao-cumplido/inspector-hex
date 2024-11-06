@@ -4,8 +4,11 @@
 	"description": "View files in byte representation with multiple decoding options.",
 	"version": "0.3.7",
 	"preview": true,
+	"workspaces": [
+		"modules/*"
+	],
 	"engines": {
-		"vscode": "^1.73.0"
+		"vscode": "^1.95.0"
 	},
 	"categories": [
 		"Other"
@@ -142,11 +145,11 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "pnpm run build",
-		"build": "pnpm run -r build",
-		"watch:extension:node": "pnpm run --filter api build && pnpm run --filter extension watch:node",
-		"watch:extension:browser": "pnpm run --filter api build && pnpm run --filter extension watch:browser",
-		"watch:editor": "pnpm run --filter editor watch",
+		"vscode:prepublish": "npm run build",
+		"build": "npm run --workspaces --if-present build",
+		"watch:extension:node": "npm run -w @inspector-hex/api build && npm run -w @hex/extension watch:node",
+		"watch:extension:browser": "npm run -w @inspector-hex/api build && npm run -w @hex/extension watch:browser",
+		"watch:editor": "npm run -w @hex/editor watch",
 		"lint": "eslint ."
 	},
 	"dependencies": {
@@ -154,13 +157,14 @@
 		"esbuild": "0.24.0"
 	},
 	"devDependencies": {
+		"@vscode/vsce": "3.2.1",
 		"@types/vscode": "1.95.0",
-		"@types/node": "22.8.7",
+		"@types/node": "22.9.0",
 		"typescript": "5.6.3",
 		"vite": "5.4.10",
 		"eslint": "9.14.0",
 		"eslint-typegen": "0.3.2",
-		"typescript-eslint": "8.12.2",
+		"typescript-eslint": "8.13.0",
 		"@stylistic/eslint-plugin": "2.10.1",
 		"@shigen/eslint-plugin": "0.12.1",
 		"eslint-plugin-unused-imports": "4.1.4"
