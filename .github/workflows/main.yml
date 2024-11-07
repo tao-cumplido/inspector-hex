@@ -14,27 +14,21 @@ jobs:
           - os: windows-latest
             platform: win32
             arch: x64
-            npm_config_arch: x64
           - os: windows-latest
             platform: win32
             arch: arm64
-            npm_config_arch: arm64
           - os: ubuntu-latest
             platform: linux
             arch: x64
-            npm_config_arch: x64
           - os: ubuntu-latest
             platform: linux
             arch: arm64
-            npm_config_arch: arm64
           - os: macos-latest
             platform: darwin
             arch: x64
-            npm_config_arch: x64
           - os: macos-latest
             platform: darwin
             arch: arm64
-            npm_config_arch: arm64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -45,9 +39,10 @@ jobs:
       - run: npm ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_arch: ${{ matrix.npm_config_arch }}
+          npm_config_arch: ${{ matrix.arch }}
       - shell: pwsh
         run: echo "target=${{ matrix.platform }}-${{ matrix.arch }}" >> $env:GITHUB_ENV
+      - run: node ./install-esbuild.mjs ${{ env.target }}
       - run: npx vsce package --target ${{ env.target }}
       - uses: actions/upload-artifact@v4
         with:
