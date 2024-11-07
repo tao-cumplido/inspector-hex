@@ -41,14 +41,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          architecture: ${{ matrix.arch }}
       - run: npm ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           npm_config_arch: ${{ matrix.npm_config_arch }}
       - shell: pwsh
         run: echo "target=${{ matrix.platform }}-${{ matrix.arch }}" >> $env:GITHUB_ENV
-      - run: rm -rf node_modules/@esbuild
-      - run: npm i @esbuild/${{ matrix.platform }}-${{ matrix.npm_config_arch }}
       - run: npx vsce package --target ${{ env.target }}
       - uses: actions/upload-artifact@v4
         with:
