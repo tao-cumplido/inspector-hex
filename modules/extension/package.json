@@ -16,7 +16,9 @@
 	"dependencies": {
 		"clear-module": "4.1.2",
 		"@nishin/reader": "0.6.0",
-		"tsx": "4.19.2",
 		"minimatch": "10.0.1"
+	},
+	"devDependencies": {
+		"esbuild": "0.24.0"
 	}
 }

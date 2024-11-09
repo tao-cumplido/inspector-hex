@@ -8,45 +8,17 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            platform: win32
-            arch: x64
-          - os: windows-latest
-            platform: win32
-            arch: arm64
-          - os: ubuntu-latest
-            platform: linux
-            arch: x64
-          - os: ubuntu-latest
-            platform: linux
-            arch: arm64
-          - os: macos-latest
-            platform: darwin
-            arch: x64
-          - os: macos-latest
-            platform: darwin
-            arch: arm64
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_arch: ${{ matrix.arch }}
-      - shell: pwsh
-        run: echo "target=${{ matrix.platform }}-${{ matrix.arch }}" >> $env:GITHUB_ENV
-      - run: node ./install-esbuild.mjs ${{ env.target }}
-      - run: npx vsce package --target ${{ env.target }}
+      - run: node ./build-vsix.mjs
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.target }}
-          path: "*.vsix"
+          path: "vsix/**/*.vsix"
 
   publish:
     runs-on: ubuntu-latest

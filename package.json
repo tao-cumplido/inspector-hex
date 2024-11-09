@@ -154,7 +154,7 @@
 	},
 	"dependencies": {
 		"@vscode/webview-ui-toolkit": "1.4.0",
-		"esbuild": "0.24.0"
+		"tsx": "4.19.2"
 	},
 	"devDependencies": {
 		"@vscode/vsce": "3.2.1",
@@ -168,6 +168,6 @@
 		"@stylistic/eslint-plugin": "2.10.1",
 		"@shigen/eslint-plugin": "0.12.1",
 		"eslint-plugin-unused-imports": "4.1.4",
-		"tar": "7.4.3"
+		"execa": "9.5.1"
 	}
 }

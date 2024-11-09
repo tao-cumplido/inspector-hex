@@ -1,13 +1,3 @@
-.vscode/**
-.vscode-test/**
-.github/**
-tsconfig*.json
-eslint*
-logo.svg
-*.vsix
-modules/**
-dist/**/*.html
-dist/**/*.map
 node_modules/**
 !node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js
 !node_modules/@esbuild/
