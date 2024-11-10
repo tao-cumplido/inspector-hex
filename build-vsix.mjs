@@ -43,4 +43,4 @@ const targets = [
 	{ os: "win32", cpu: "arm64", },
 ];
 
-Promise.all(targets.map((target) => buildTarget(target)));
+Promise.all(targets.map(buildTarget));
