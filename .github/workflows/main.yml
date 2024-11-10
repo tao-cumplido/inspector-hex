@@ -11,11 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci
-      - run: npm run build
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run build
       - run: node ./build-vsix.mjs
       - uses: actions/upload-artifact@v4
         with:
@@ -27,6 +31,6 @@ jobs:
     if: success() && startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/download-artifact@v4
-      - run: npx vsce publish --packagePath $(find . -iname *.vsix)
+      - run: pnpm vsce publish --packagePath $(find . -iname *.vsix)
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}

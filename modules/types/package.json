@@ -1,5 +1,8 @@
 {
 	"name": "@hex/types",
 	"private": true,
-	"types": "index.d.ts"
+	"types": "index.d.ts",
+	"dependencies": {
+		"@inspector-hex/api": "workspace:*"
+	}
 }

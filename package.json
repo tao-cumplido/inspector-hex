@@ -4,9 +4,6 @@
 	"description": "View files in byte representation with multiple decoding options.",
 	"version": "0.3.7",
 	"preview": true,
-	"workspaces": [
-		"modules/*"
-	],
 	"engines": {
 		"vscode": "^1.95.0"
 	},
@@ -145,11 +142,10 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run build",
-		"build": "npm run --workspaces --if-present build",
-		"watch:extension:node": "npm run -w @inspector-hex/api build && npm run -w @hex/extension watch:node",
-		"watch:extension:browser": "npm run -w @inspector-hex/api build && npm run -w @hex/extension watch:browser",
-		"watch:editor": "npm run -w @hex/editor watch",
+		"build": "pnpm run -r build",
+		"watch:extension:node": "pnpm run --filter api build && pnpm run --filter extension watch:node",
+		"watch:extension:browser": "pnpm run --filter api build && pnpm run --filter extension watch:browser",
+		"watch:editor": "pnpm run --filter editor watch",
 		"lint": "eslint ."
 	},
 	"dependencies": {
