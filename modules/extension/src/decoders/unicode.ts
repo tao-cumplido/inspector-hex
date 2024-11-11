@@ -1,34 +1,31 @@
-import type { ByteOrder, Encoding } from '@nishin/reader';
-import { BinaryReader, DataType, ReadError, ReadMode } from '@nishin/reader';
+import type { Decoder } from "@inspector-hex/api";
+import { BinaryReader, DataType, ReadError, ReadMode, type ByteOrder, type Encoding } from "@nishin/reader";
 
-import type { Decoder } from '@inspector-hex/decoder-api';
-
-import { resolveControlCharacter } from './control-characters';
-import { errorItem } from './error';
+import { resolveControlCharacter } from "./control-characters";
+import { errorItem } from "./error";
 
 export function unicode(encoding: Encoding, byteOrder?: ByteOrder): Decoder {
 	const type = DataType.char(encoding);
-	return (data, { offset, settings: { renderControlCharacters } }) => {
+	return (data, { offset, settings: { renderControlCharacters, }, }) => {
 		const reader = new BinaryReader(data, byteOrder);
 
 		const values = [];
 
 		while (reader.hasNext()) {
 			try {
-				const { value, source } = reader.next(type, ReadMode.Source);
+				const { value, source, } = reader.next(type, ReadMode.Source);
 
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				const codePoint = value.codePointAt(0)!;
 
 				if (codePoint < 0x21 || (codePoint >= 0x7f && codePoint < 0xa0)) {
-					if (renderControlCharacters === 'off') {
-						values.push({ length: source.byteLength });
+					if (renderControlCharacters === "off") {
+						values.push({ length: source.byteLength, });
 					} else {
 						values.push({
 							text: resolveControlCharacter(codePoint, renderControlCharacters),
 							length: source.byteLength,
 							style: {
-								color: 'var(--vscode-editorGhostText-foreground)',
+								color: "var(--vscode-editorGhostText-foreground)",
 							},
 						});
 					}
@@ -50,6 +47,6 @@ export function unicode(encoding: Encoding, byteOrder?: ByteOrder): Decoder {
 			}
 		}
 
-		return { offset, values };
+		return { offset, values, };
 	};
 }

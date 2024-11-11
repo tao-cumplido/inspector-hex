@@ -1,16 +1,15 @@
-import type { ExtensionContext } from 'vscode';
+import type { ExtensionContext } from "vscode";
 
-import { BinaryViewProvider } from './binary-view-provider';
-import { DecodersState, GoToOffset, SelectedDecoderStatusItem } from './state';
+import { BinaryViewProvider } from "./binary-view-provider";
+import { DecodersState, GoToOffset, SelectedDecoderStatusItem } from "./state";
 
-declare module 'vscode' {
-	// eslint-disable-next-line @typescript-eslint/no-namespace, @typescript-eslint/no-shadow
+declare module "vscode" {
 	export namespace window {
 		export function showQuickPick<T extends QuickPickItem>(
 			items: readonly T[] | Thenable<readonly T[]>,
 			options?: QuickPickOptions,
 			token?: CancellationToken,
-		): Thenable<Exclude<T, QuickPickItem & { kind: QuickPickItemKind.Separator }> | undefined>;
+		): Thenable<Exclude<T, QuickPickItem & { kind: QuickPickItemKind.Separator; }> | undefined>;
 	}
 }
 

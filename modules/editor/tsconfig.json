@@ -1,8 +1,8 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"types": ["vite/client"],
-		"lib": ["es2020", "dom", "dom.iterable"]
+		"types": ["vite/client", "vscode-webview"],
+		"lib": ["es2023", "dom", "dom.iterable"]
 	},
 	"include": ["src/**/*"]
 }

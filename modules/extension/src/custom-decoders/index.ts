@@ -1,22 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "node:fs";
+import path from "node:path";
 
-import '@esbuild-kit/cjs-loader';
-import clearModule from 'clear-module';
-import { window, workspace } from 'vscode';
+import type { PotentialDecoder } from "@hex/types";
+import clearModule from "clear-module";
+import "tsx/cjs";
+import { window, workspace } from "vscode";
 
-import type { PotentialDecoder } from '@hex/types';
-
-import type { DecoderItem } from '../decoders';
-import { output } from '../output';
-import { DocumentView } from '../state';
+import type { DecoderItem } from "../decoders";
+import { output } from "../output";
+import { DocumentView } from "../state";
 
 const customDecoderWatchers = new Set<fs.FSWatcher>();
 
 export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 	const customDecodersConfiguration = workspace
-		.getConfiguration('inspectorHex')
-		.get<Record<string, string>>('customDecoders');
+		.getConfiguration("inspectorHex")
+		.get<Record<string, string>>("customDecoders");
 
 	if (!customDecodersConfiguration) {
 		window.showErrorMessage(`Couldn't read custom decoders configuration.`);
@@ -38,12 +37,12 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 		return [];
 	}
 
-	if (root.uri.scheme !== 'file') {
+	if (root.uri.scheme !== "file") {
 		window.showWarningMessage(`Custom decoders are not supported in virtual workspaces.`);
 		return [];
 	}
 
-	return entries.reduce<DecoderItem[]>((result, [label, file]) => {
+	return entries.reduce<DecoderItem[]>((result, [ label, file, ]) => {
 		try {
 			const destinationPath = path.isAbsolute(file) ? file : path.join(root.uri.fsPath, file);
 
@@ -66,17 +65,15 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 
 			process.chdir(path.isAbsolute(file) ? path.dirname(destinationPath) : root.uri.fsPath);
 
-			// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
 			const module = require(destinationPath) as Record<string, unknown>;
-			/* prettier-ignore */
 			const potentialDecoder =
-				'default' in module ? module.default :
-				'decoder' in module ? module.decoder :
+				"default" in module ? module.default :
+				"decoder" in module ? module.decoder :
 				module;
 
 			process.chdir(cwd);
 
-			if (typeof potentialDecoder !== 'function') {
+			if (typeof potentialDecoder !== "function") {
 				throw new TypeError(`Custom decoder '${label}' is not a function`);
 			}
 
@@ -86,7 +83,6 @@ export function resolveCustomDecoders(reload: () => void): DecoderItem[] {
 			});
 		} catch (error) {
 			window.showErrorMessage(`Error resolving custom decoder '${label}'. See output for details.`);
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			output.appendLine(`${error}\n`);
 		}
 

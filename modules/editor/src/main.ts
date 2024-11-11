@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+import "./style.css";
 
-import './style.css';
+import type { HostMessage } from "@hex/types";
 
-import type { HostMessage } from '@hex/types';
-
-import { handleByteData } from './handle-byte-data';
-import { handleTextData } from './handle-text-data';
-import { hex } from './hex';
-import { render } from './render';
+import { handleByteData } from "./handle-byte-data";
+import { handleTextData } from "./handle-text-data";
+import { hex } from "./hex";
+import { render } from "./render";
 import {
 	columnHeader,
 	data,
@@ -18,8 +16,8 @@ import {
 	stat,
 	updateRowHeight,
 	updateScrollHandle,
-} from './state';
-import { vscode } from './vscode';
+} from "./state";
+import { vscode } from "./vscode";
 
 declare global {
 	interface WindowEventMap {
@@ -27,15 +25,15 @@ declare global {
 	}
 }
 
-columnHeader.append(headerOffsetSpacer, ...headerItems.flatMap(({ byte, text }) => [byte, text]));
+columnHeader.append(headerOffsetSpacer, ...headerItems.flatMap(({ byte, text, }) => [ byte, text, ]));
 
 updateRowHeight();
 
-window.addEventListener('content-scroll', render);
+window.addEventListener("content-scroll", render);
 
-window.addEventListener('message', ({ data: message }) => {
+window.addEventListener("message", ({ data: message, }) => {
 	switch (message.type) {
-		case 'stat': {
+		case "stat": {
 			const hexDigitCount = message.data.fileSize.toString(16).length;
 
 			stat.offsetHexDigitCount = hexDigitCount + (hexDigitCount % 2);
@@ -47,30 +45,30 @@ window.addEventListener('message', ({ data: message }) => {
 
 			return render();
 		}
-		case 'bytes': {
+		case "bytes": {
 			return handleByteData(message.data);
 		}
-		case 'prepareText': {
-			headerProgress.style.visibility = 'visible';
+		case "prepareText": {
+			headerProgress.style.visibility = "visible";
 
-			for (const element of data.header.querySelectorAll('.placeholders')) {
-				element.classList.remove('hidden');
+			for (const element of data.header.querySelectorAll(".placeholders")) {
+				element.classList.remove("hidden");
 			}
 
-			for (const element of data.container.querySelectorAll('section.text')) {
+			for (const element of data.container.querySelectorAll("section.text")) {
 				element.remove();
 			}
 
 			return;
 		}
-		case 'text': {
-			headerProgress.style.visibility = 'hidden';
+		case "text": {
+			headerProgress.style.visibility = "hidden";
 			return handleTextData(message.data);
 		}
-		case 'goTo': {
+		case "goTo": {
 			return goToOffset(message.data);
 		}
 	}
 });
 
-vscode.postMessage({ type: 'ready' });
+vscode.postMessage({ type: "ready", });

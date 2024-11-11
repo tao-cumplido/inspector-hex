@@ -1,14 +1,11 @@
-import type { FileHandle } from 'fs/promises';
+import type { FileHandle } from "node:fs/promises";
 
-import type { CustomDocument, Uri } from 'vscode';
-import { window, workspace } from 'vscode';
+import type { PotentialDecoder } from "@hex/types";
+import { isDecoderResult, type DecoderResult, type DecoderState } from "@inspector-hex/api";
+import { window, workspace, type CustomDocument, type Uri } from "vscode";
 
-import type { PotentialDecoder } from '@hex/types';
-import type { DecoderResult, DecoderState } from '@inspector-hex/decoder-api';
-import { isDecoderResult } from '@inspector-hex/decoder-api';
-
-import { output } from '../output';
-import { DocumentView, SelectedDecoderStatusItem } from '../state';
+import { output } from "../output";
+import { DocumentView, SelectedDecoderStatusItem } from "../state";
 
 export abstract class AbstractDocument<T extends FileHandle | undefined> implements CustomDocument {
 	readonly uri;
@@ -36,7 +33,7 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 					uri: this.uri.toString(),
 					handle: this.fileHandle as FileHandle,
 				},
-				settings: workspace.getConfiguration('inspectorHex.decode') as unknown as DecoderState['settings'],
+				settings: workspace.getConfiguration("inspectorHex.decode") as unknown as DecoderState["settings"],
 			});
 
 			if (!isDecoderResult(result)) {
@@ -47,7 +44,6 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 			return result;
 		} catch (error) {
 			window.showErrorMessage(`Error while decoding data. See output for details.`);
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			output.appendLine(`${error}\n`);
 			if (error instanceof Error && error.stack) {
 				output.appendLine(error.stack);
@@ -63,7 +59,7 @@ export abstract class AbstractDocument<T extends FileHandle | undefined> impleme
 			DocumentView.active = null;
 		}
 
-		const thisView = [...DocumentView.all].find(({ document }) => document === this);
+		const thisView = [ ...DocumentView.all, ].find(({ document, }) => document === this);
 
 		if (thisView) {
 			DocumentView.all.delete(thisView);

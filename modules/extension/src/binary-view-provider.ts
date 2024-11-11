@@ -1,15 +1,23 @@
-import type { CustomReadonlyEditorProvider, Disposable, ExtensionContext, Webview, WebviewPanel } from 'vscode';
-import { minimatch } from 'minimatch';
-import { window, workspace, Uri } from 'vscode';
+import { minimatch } from "minimatch";
+import {
+	Uri,
+	window,
+	workspace,
+	type CustomReadonlyEditorProvider,
+	type Disposable,
+	type ExtensionContext,
+	type Webview,
+	type WebviewPanel,
+} from "vscode";
 
-import { BinaryDocument } from './binary-document';
-import { defaultDecoder } from './decoders';
-import { DecodersState, DocumentView, SelectedDecoderStatusItem } from './state';
+import { BinaryDocument } from "./binary-document";
+import { defaultDecoder } from "./decoders";
+import { DecodersState, DocumentView, SelectedDecoderStatusItem } from "./state";
 
 const viewStates = new WeakMap<Webview, DocumentView>();
 
 export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDocument> {
-	private static readonly viewType = 'inspectorHex.binary';
+	private static readonly viewType = "inspectorHex.binary";
 
 	static register(context: ExtensionContext): Disposable {
 		return window.registerCustomEditorProvider(BinaryViewProvider.viewType, new BinaryViewProvider(context), {
@@ -40,10 +48,10 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 
 		const vscodeUiToolkitUri = this.webviewUri(
 			webviewPanel.webview,
-			'node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js',
+			"node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js",
 		);
-		const scriptUri = this.webviewUri(webviewPanel.webview, 'dist/editor/index.js');
-		const styleUri = this.webviewUri(webviewPanel.webview, 'dist/editor/index.css');
+		const scriptUri = this.webviewUri(webviewPanel.webview, "dist/editor/index.js");
+		const styleUri = this.webviewUri(webviewPanel.webview, "dist/editor/index.css");
 
 		webviewPanel.webview.html = /* html */ `
 			<!doctype html>
@@ -76,7 +84,6 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 		`;
 
 		webviewPanel.onDidChangeViewState(() => {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const currentView = viewStates.get(webviewPanel.webview)!;
 
 			if (webviewPanel.visible) {
@@ -95,16 +102,16 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 		});
 
 		const defaultDecodersConfiguration =
-			workspace.getConfiguration('inspectorHex').get<Record<string, string>>('defaultDecoders') ?? {};
+			workspace.getConfiguration("inspectorHex").get<Record<string, string>>("defaultDecoders") ?? {};
 
 		const relativePath = workspace.asRelativePath(document.uri, false);
 
-		const defaultEntry = Object.entries(defaultDecodersConfiguration).find(([pattern]) => {
-			const path = pattern.startsWith('/') ? document.uri.fsPath : relativePath;
+		const defaultEntry = Object.entries(defaultDecodersConfiguration).find(([ pattern, ]) => {
+			const path = pattern.startsWith("/") ? document.uri.fsPath : relativePath;
 			return minimatch(path, pattern);
 		});
 
-		const decoder = DecodersState.items.find(({ label }) => label === defaultEntry?.[1]) ?? defaultDecoder;
+		const decoder = DecodersState.items.find(({ label, }) => label === defaultEntry?.[1]) ?? defaultDecoder;
 
 		const viewState = new DocumentView(webviewPanel.webview, document, decoder);
 

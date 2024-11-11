@@ -1,6 +1,6 @@
-import type { HostMessageMap } from '@hex/types';
+import type { HostMessageMap } from "@hex/types";
 
-export type Stat = HostMessageMap['stat'] & {
+export type Stat = HostMessageMap["stat"] & {
 	fileRows: number;
 	offsetHexDigitCount: number;
 };

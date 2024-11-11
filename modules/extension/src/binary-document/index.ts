@@ -1,13 +1,12 @@
-import type { FileHandle } from 'fs/promises';
-import fs from 'fs/promises';
+import fs, { type FileHandle } from "node:fs/promises";
 
-import type { Uri } from 'vscode';
+import type { Uri } from "vscode";
 
-import { AbstractDocument } from './abstract-document';
+import { AbstractDocument } from "./abstract-document";
 
 export class BinaryDocument extends AbstractDocument<FileHandle> {
 	static async create(uri: Uri): Promise<BinaryDocument> {
-		const fileHandle = await fs.open(uri.fsPath, 'r');
+		const fileHandle = await fs.open(uri.fsPath, "r");
 		const stat = await fileHandle.stat();
 		return new BinaryDocument(uri, stat.size, fileHandle);
 	}
