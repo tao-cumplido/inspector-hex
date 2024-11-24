@@ -5,6 +5,9 @@
 		"build": "vite build",
 		"watch": "vite build --watch --sourcemap --minify false --mode development"
 	},
+	"dependencies": {
+		"@vscode-elements/elements": "1.8.0"
+	},
 	"devDependencies": {
 		"@inspector-hex/api": "workspace:*",
 		"@hex/types": "workspace:*",

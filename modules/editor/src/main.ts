@@ -1,6 +1,7 @@
 import "./style.css";
 
 import type { HostMessage } from "@hex/types";
+import "@vscode-elements/elements/dist/vscode-progress-ring/index.js";
 
 import { handleByteData } from "./handle-byte-data";
 import { handleTextData } from "./handle-text-data";

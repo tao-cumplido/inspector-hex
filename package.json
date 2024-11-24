@@ -149,7 +149,6 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@vscode/webview-ui-toolkit": "1.4.0",
 		"tsx": "4.19.2"
 	},
 	"devDependencies": {

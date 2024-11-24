@@ -46,10 +46,6 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 			enableScripts: true,
 		};
 
-		const vscodeUiToolkitUri = this.webviewUri(
-			webviewPanel.webview,
-			"node_modules/@vscode/webview-ui-toolkit/dist/toolkit.min.js",
-		);
 		const scriptUri = this.webviewUri(webviewPanel.webview, "dist/editor/index.js");
 		const styleUri = this.webviewUri(webviewPanel.webview, "dist/editor/index.css");
 
@@ -59,7 +55,6 @@ export class BinaryViewProvider implements CustomReadonlyEditorProvider<BinaryDo
 				<head>
 					<meta charset="UTF-8" />
 					<title>Hex-View</title>
-					<script type="module" src="${vscodeUiToolkitUri}"></script>
 					<script type="module" crossorigin src="${scriptUri}"></script>
 					<link rel="stylesheet" href="${styleUri}">
 				</head>
